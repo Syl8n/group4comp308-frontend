@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.submit-button {
+  height: 100px; /* Change the value to match the height of the form fields */
+}
