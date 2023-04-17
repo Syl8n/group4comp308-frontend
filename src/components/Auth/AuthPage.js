@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import Register from './Registration';
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "../../graphql/mutation";
+import cookie from 'js-cookie';
 
 
 const AuthPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showRegister, setShowRegister] = useState(false);
-
+    const [errorMessage, setErrorMessage] = useState('');
     const [login, { loading, error }] = useMutation(LOGIN);
 
     const handleLogin = async (e) => {
@@ -26,8 +27,11 @@ const AuthPage = () => {
             localStorage.setItem('token', data.login.token);
             localStorage.setItem('username', data.login.member.username);
             localStorage.setItem('role', data.login.member.role);
+            // store the token as a cookie
+            cookie.set('token', data.login.token);
         } catch (err) {
             console.error(err);
+            setErrorMessage(err.message.replace('GraphQL error: ', ''));
         }
     };
 
@@ -93,6 +97,7 @@ const AuthPage = () => {
 
                 </div>
             </div>
+            {error && <Alert variant="danger">{errorMessage}</Alert>}
             {showRegister && <Register />}
         </div>
     );
