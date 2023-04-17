@@ -12,3 +12,16 @@ export const ADD_MEMBER = gql`
     }
   }
 `;
+
+export const LOGIN = gql`
+  mutation Login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      member {
+        _id
+        username
+        role
+      }
+      token
+    }
+  }
+`;

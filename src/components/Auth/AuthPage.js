@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
 import Register from './Registration';
+import { useMutation } from "@apollo/client";
+import { LOGIN } from "../../graphql/mutation";
 
 
 const AuthPage = () => {
@@ -8,9 +10,25 @@ const AuthPage = () => {
     const [password, setPassword] = useState('');
     const [showRegister, setShowRegister] = useState(false);
 
-    const handleSubmit = (e) => {
+    const [login, { loading, error }] = useMutation(LOGIN);
+
+    const handleLogin = async (e) => {
         e.preventDefault();
-        // Handle form submission logic
+        e.preventDefault();
+        try {
+            const { data } = await login({
+                variables: {
+                    username,
+                    password,
+                },
+            });
+            console.log(data);
+            localStorage.setItem('token', data.login.token);
+            localStorage.setItem('username', data.login.member.username);
+            localStorage.setItem('role', data.login.member.role);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     return (
@@ -26,12 +44,12 @@ const AuthPage = () => {
                         </Col>
                         <Col md={5} className="d-flex flex-column justify-content-end align-items-end">
 
-                            <Form onSubmit={handleSubmit}>
+                            <Form onSubmit={handleLogin}>
                                 <Row className="align-items-end" style={{ marginRight: '20px' }}>
                                     <Col className='d-flex flex-column align-items-end'>
                                         <Row>
-                                            <Button variant="primary" type="submit-button" className="custom-button">
-                                                Login
+                                            <Button variant="primary" type="submit-button" className="custom-button" disabled={loading}>
+                                            {loading ? "Logging in..." : "Log in"}
                                             </Button>
                                         </Row>
                                     </Col>
@@ -72,7 +90,7 @@ const AuthPage = () => {
                         </Col>
                     </Row>
                     <hr className="my-4" />
-                   
+
                 </div>
             </div>
             {showRegister && <Register />}
