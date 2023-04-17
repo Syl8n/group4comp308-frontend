@@ -4,9 +4,11 @@ import Register from './Registration';
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "../../graphql/mutation";
 import cookie from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 
 const AuthPage = () => {
+    const navigate = useNavigate()
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showRegister, setShowRegister] = useState(false);
@@ -26,9 +28,17 @@ const AuthPage = () => {
             console.log(data);
             localStorage.setItem('token', data.login.token);
             localStorage.setItem('username', data.login.member.username);
+            localStorage.setItem('firstname', data.login.member.firstname);
             localStorage.setItem('role', data.login.member.role);
             // store the token as a cookie
             cookie.set('token', data.login.token);
+
+              // Redirect to the appropriate page based on the user's role
+              if (data.login.member.role === 'PATIENT') {
+                navigate(`/patient/${data.login.member._id}`);
+            } else {
+                navigate(`/nurse/${data.login.member._id}`);
+            }
         } catch (err) {
             console.error(err);
             setErrorMessage(err.message.replace('GraphQL error: ', ''));

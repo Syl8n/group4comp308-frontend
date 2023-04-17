@@ -19,6 +19,7 @@ export const LOGIN = gql`
       member {
         _id
         username
+        firstname
         role
       }
       token

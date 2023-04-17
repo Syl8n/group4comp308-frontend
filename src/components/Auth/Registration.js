@@ -70,7 +70,7 @@ const Registration = (props) => {
             });
             console.log(data.addMember);
             // Redirect to the appropriate page based on the user's role
-            if (data.addMember.role === 'Patient') {
+            if (data.addMember.role === 'PATIENT') {
                 navigate(`/patient/${data.addMember._id}`);
             } else {
                 navigate(`/nurse/${data.addMember._id}`);
