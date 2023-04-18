@@ -9,6 +9,7 @@ import PredictHeartDisease from './components/Nurse/PredictHeartDisease';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import VitalSignsForm from './components/Nurse/VitalSignsForm';
+import PreviousVisits from './components/Nurse/PreviousVisits';
 
 
 // Initialize Apollo Client
@@ -29,6 +30,7 @@ function App() {
           <Route exact path="/nurse/:id" element={<NurseMenu />} />
           <Route exact path="/predict" element={<PredictHeartDisease/>}/>
           <Route exact path="/vitalsigns/:id" element={<VitalSignsForm/>} />
+          <Route exact path="/previousvisit/:id" element={<PreviousVisits />} />
           <Route exact path="/patient/:id/symptom-checklist" element={<Checklist />} />
           
         </Routes>

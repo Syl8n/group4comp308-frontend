@@ -23,3 +23,27 @@ export const GET_MEMBER = gql`
     }
   }
 `;
+
+export const GET_PREVIOUS_VISITS = gql`
+query GetVitalSigns($memberId: ID!) {
+  getVitalSigns(_id: $memberId) {
+    _id
+    temperature
+    heartRate
+    bloodPressureMax
+    bloodPressureMin
+    respiratoryRate
+    member {
+      _id
+      firstname
+      lastname
+    }
+    writer {
+      _id
+      firstname
+      lastname
+    }
+    createdAt
+  }
+}
+`;

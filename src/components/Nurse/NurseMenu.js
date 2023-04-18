@@ -32,6 +32,10 @@ const NurseMenu = () => {
         navigate(`/vitalsigns/${patient._id}`);
     };
 
+    const handlePreviousVisitSelect = (patient) => {
+        navigate(`/previousvisit/${patient._id}`);
+    };
+
 
     console.log(data); // make sure data is not undefined
 
@@ -72,7 +76,7 @@ const NurseMenu = () => {
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu>
                                             <Dropdown.Item onClick={() => handleVitalSignsSelect(patient)}>Enter Vital Signs</Dropdown.Item>
-                                            <Dropdown.Item>Access Previous Visit Info</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => handlePreviousVisitSelect(patient)}>Access Previous Visit Info</Dropdown.Item>
                                             <Dropdown.Item>Send Motivational Tips</Dropdown.Item>
                                             <Dropdown.Item>Generate List of Medical Conditions</Dropdown.Item>
                                         </Dropdown.Menu>
