@@ -57,16 +57,17 @@ const NurseMenu = () => {
                 </thead>
                 <tbody>
                     {data?.getMembers.map((patient) => (
-                        <tr key={patient.id} onClick={() => handlePatientSelect(patient)}>
+                        <tr key={patient._id} onClick={() => handlePatientSelect(patient)}>
                             <td>{patient.firstname}</td>
                             <td>{patient.lastname}</td>
                             <td>{patient.username}</td>
 
                         </tr>
                     ))}
-                </tbody>
+               
                 {loading && <tr><td>Loading...</td></tr>}
                 {error && <tr><td>Error: {error.message}</td></tr>}
+                </tbody>
             </Table>
             {selectedPatient && (
                 <Dropdown style={{ position: 'absolute', top: '100px', right: '50px' }}>
