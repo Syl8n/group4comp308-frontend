@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Navbar, Nav, Form, Button, FloatingLabel, Modal } from "react-bootstrap";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 function PredictHeartDisease() {
+    const navigate = useNavigate();
     const [patientInfo, setPatientInfo] = useState({
         age: "",
         sex: "",
@@ -25,6 +27,11 @@ function PredictHeartDisease() {
 
     const handleClose = () => {
         setShow(false);
+    };
+
+    const handleCancel = () => {
+        const nurseId = localStorage.getItem('userId')
+        navigate('/nurse/' + nurseId);
     };
 
     const setAge = (input) => {
@@ -117,9 +124,9 @@ function PredictHeartDisease() {
 
             if (res.data.prediction[0] === 1) {
                 setHasHeartDisease(true);
-              } else {
+            } else {
                 setHasHeartDisease(false);
-              }
+            }
 
             setResult(res.data);
             setShow(true);
@@ -233,10 +240,17 @@ function PredictHeartDisease() {
                                 <option value="3">Reversible Defect</option>
                             </Form.Select>
                         </FloatingLabel>
+                        <div className='mt-2'>
+                            <Button variant="primary" type="submit">
+                                Submit
+                            </Button>
+                        </div>
+                        <div className='mt-2'>
+                            <Button variant="secondary" onClick={handleCancel}>
+                                Cancel
+                            </Button>
+                        </div>
 
-                        <Button variant="primary" type="submit">
-                            Submit
-                        </Button>
                     </Form>
                 </div>
 
