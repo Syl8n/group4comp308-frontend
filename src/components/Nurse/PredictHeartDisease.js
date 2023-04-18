@@ -92,21 +92,21 @@ function PredictHeartDisease() {
 
         const body = {
             data: [
-              patientInfo.age,
-              patientInfo.sex,
-              patientInfo.chestPainType,
-              patientInfo.restingBloodPressure,
-              patientInfo.cholesterol,
-              patientInfo.fastingBloodSugar,
-              patientInfo.restingElectrocardiographicResults,
-              patientInfo.maximumHeartRateAchieved,
-              patientInfo.exerciseInducedAngina,
-              patientInfo.oldpeak,
-              patientInfo.slope,
-              patientInfo.numberMajorVessels,
-              patientInfo.thal,
+                patientInfo.age,
+                patientInfo.sex,
+                patientInfo.chestPainType,
+                patientInfo.restingBloodPressure,
+                patientInfo.cholesterol,
+                patientInfo.fastingBloodSugar,
+                patientInfo.restingElectrocardiographicResults,
+                patientInfo.maximumHeartRateAchieved,
+                patientInfo.exerciseInducedAngina,
+                patientInfo.oldpeak,
+                patientInfo.slope,
+                patientInfo.numberMajorVessels,
+                patientInfo.thal,
             ],
-          };
+        };
 
         try {
             const res = await axios.post(
@@ -115,9 +115,14 @@ function PredictHeartDisease() {
                 config
             );
 
+            if (res.data.prediction[0] === 1) {
+                setHasHeartDisease(true);
+              } else {
+                setHasHeartDisease(false);
+              }
+
             setResult(res.data);
             setShow(true);
-            setHasHeartDisease(res.data === 1); // set hasHeartDisease based on the result
         } catch (err) {
             console.log(err);
         }
@@ -223,9 +228,9 @@ function PredictHeartDisease() {
                         <FloatingLabel label="Thalassemia" className="mb-3" controlId="thalassemia">
                             <Form.Select aria-label="Thalassemia" onChange={e => setThal(e.target.value)}>
                                 <option value="">Choose...</option>
-                                <option value="0">Normal</option>
-                                <option value="1">Fixed Defect</option>
-                                <option value="2">Reversible Defect</option>
+                                <option value="1">Normal</option>
+                                <option value="2">Fixed Defect</option>
+                                <option value="3">Reversible Defect</option>
                             </Form.Select>
                         </FloatingLabel>
 
@@ -240,13 +245,19 @@ function PredictHeartDisease() {
                         <Modal.Title>Prediction</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <p>Patient {hasHeartDisease ? "has" : "does not have"} heart disease.</p>
+                        <div className="d-flex justify-content-center">
+                            {hasHeartDisease ? (
+                                <p className="text-danger">You have heart disease.</p>
+                            ) : (
+                                <p className="text-success">You do not have heart disease.</p>
+                            )}
+                        </div>
+                        <div className="d-flex justify-content-center">
+                            <Button variant="secondary" onClick={handleClose}>
+                                Close
+                            </Button>
+                        </div>
                     </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Close
-                        </Button>
-                    </Modal.Footer>
                 </Modal>
             </div>
         </div>
