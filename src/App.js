@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AuthPage from './components/Auth/AuthPage';
 import PatientMenu from './components/Patient/PatientMenu';
 import NurseMenu from './components/Nurse/NurseMenu';
+import Checklist from './components/Patient/HeartAttackRiskChecklist'
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
@@ -23,6 +24,8 @@ function App() {
           <Route exact path="/" element={<AuthPage />} />
           <Route exact path="/patient/:id" element={<PatientMenu />} />
           <Route exact path="/nurse/:id" element={<NurseMenu />} />
+          <Route exact path="/patient/:id/symptom-checklist" element={<Checklist />} />
+          
         </Routes>
       </Router>
     </ApolloProvider>

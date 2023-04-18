@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar, Nav,  Button, Container } from 'react-bootstrap';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import cookie from 'js-cookie';
 
 const PatientMenu = () => {
@@ -29,10 +29,10 @@ const PatientMenu = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto">
-                        <Nav.Link className="nav-link" to={`/patient/${patientId}/emergency-alert`}>Emergency Alert</Nav.Link>
-                        <Nav.Link className="nav-link" to={`/patient/${patientId}/fitness-games`}>Fitness Games</Nav.Link>
-                        <Nav.Link className="nav-link" to={`/patient/${patientId}/daily-info`}>Daily Info</Nav.Link>
-                        <Nav.Link className="nav-link" to={`/patient/${patientId}/symptom-checklist`}>Symptom Checklist</Nav.Link>
+                        <NavLink className="nav-link" to={`/patient/${patientId}/emergency-alert`}>Emergency Alert</NavLink>
+                        <NavLink className="nav-link" to={`/patient/${patientId}/fitness-games`}>Fitness Games</NavLink>
+                        <NavLink className="nav-link" to={`/patient/${patientId}/daily-info`}>Daily Info</NavLink>
+                        <NavLink className="nav-link" to={`/patient/${patientId}/symptom-checklist`}>Symptom Checklist</NavLink>
 
                     </Nav>
                    
