@@ -15,7 +15,7 @@ import VitalSignsForm from './components/Nurse/VitalSignsForm';
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
   cache: new InMemoryCache(),
-  batchcredentials: 'include',
+  credentials: 'include',
 });
 
 function App() {

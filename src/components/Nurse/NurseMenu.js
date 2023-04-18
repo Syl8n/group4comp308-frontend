@@ -87,18 +87,7 @@ const NurseMenu = () => {
                 </tbody>
 
             </Table>
-            {selectedPatient && (
-                <Dropdown style={{ position: 'absolute', top: '100px', right: '50px' }}>
-                    <Dropdown.Toggle variant="secondary">{selectedPatient.firstName} {selectedPatient.lastName}</Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <Dropdown.Item>Enter Vital Signs</Dropdown.Item>
-                        <Dropdown.Item>Access Previous Visit Info</Dropdown.Item>
-                        <Dropdown.Item>Send Motivational Tips</Dropdown.Item>
-                        <Dropdown.Item onClick={() => navigate('/predict')}>Detect Heart Disease</Dropdown.Item>
 
-                    </Dropdown.Menu>
-                </Dropdown>
-            )}
         </div>
     );
 };

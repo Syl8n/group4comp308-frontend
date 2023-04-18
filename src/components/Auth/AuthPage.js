@@ -32,8 +32,8 @@ const AuthPage = () => {
             localStorage.setItem('userId', data.login.member._id )
             localStorage.setItem('role', data.login.member.role);
             // store the token as a cookie
-            cookie.set('token', data.login.token);
-            cookie.set('writerId', data.login.member._id)
+            //cookie.set('token', data.login.token);
+            //cookie.set('writerId', data.login.member._id)
 
               // Redirect to the appropriate page based on the user's role
               if (data.login.member.role === 'PATIENT') {

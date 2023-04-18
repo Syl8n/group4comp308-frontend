@@ -15,9 +15,9 @@ const VitalSignsForm = () => {
 
     const [addVitalSigns, { addLoading, addError }] = useMutation(ADD_VITAL_SIGNS, {
         onError: (addError) => {
-          console.error(addError);
+            console.error(addError);
         },
-      });
+    });
 
 
 
@@ -32,38 +32,45 @@ const VitalSignsForm = () => {
         e.preventDefault();
         // Perform some action with the entered vital signs data, such as submitting it to a server.
         console.log('Submitted vital signs:', {
-          bodyTemperature,
-          heartRate,
-          bloodPressureMax,
-          bloodPressureMin,
-          respiratoryRate
+            bodyTemperature,
+            heartRate,
+            bloodPressureMax,
+            bloodPressureMin,
+            respiratoryRate
         });
-      
+
         try {
             const { data } = await addVitalSigns({
                 variables: {
-                  form: {
-                    memberId: patientId,
-                    temperature: parseFloat(bodyTemperature),
-                    heartRate: parseInt(heartRate),
-                    bloodPressureMax: parseInt(bloodPressureMax),
-                    bloodPressureMin: parseInt(bloodPressureMin),
-                    respiratoryRate: parseInt(respiratoryRate),
-                
-                  },
+                    form: {
+                        memberId: patientId,
+                        temperature: parseFloat(bodyTemperature),
+                        heartRate: parseInt(heartRate),
+                        bloodPressureMax: parseInt(bloodPressureMax),
+                        bloodPressureMin: parseInt(bloodPressureMin),
+                        respiratoryRate: parseInt(respiratoryRate),
+
+                    },
                 },
-              });
-              console.log(data)
+            });
+            console.log(data)
+
+            // Show alert and redirect to nurse's main menu
+            if (data && data.addVitalSign) {
+                alert('Vital signs submitted successfully!');
+                const nurseId = localStorage.getItem('userId');
+                navigate('/nurse/' + nurseId);
+            }
         } catch (error) {
-          console.error(addError);
-          // Handle the error here
+            console.error(addError);
+            // Handle the error here
         }
     };
 
     const handleCancel = () => {
         const nurseId = localStorage.getItem('userId')
-        navigate('/nurse/'+ nurseId);
-      };
+        navigate('/nurse/' + nurseId);
+    };
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
