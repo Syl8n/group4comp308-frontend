@@ -5,12 +5,13 @@ import AuthPage from './components/Auth/AuthPage';
 import PatientMenu from './components/Patient/PatientMenu';
 import NurseMenu from './components/Nurse/NurseMenu';
 import { ApolloProvider } from '@apollo/react-hooks';
-import ApolloClient from 'apollo-boost';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 
 // Initialize Apollo Client
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
+  cache: new InMemoryCache()
 });
 
 function App() {
