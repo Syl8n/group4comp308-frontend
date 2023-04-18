@@ -11,3 +11,15 @@ export const GET_PATIENT_MEMBERS = gql`
     }
   }
 `;
+
+export const GET_MEMBER = gql`
+  query GetMember($_id: ID!) {
+    getMember(_id: $_id) {
+      _id
+      firstname
+      lastname
+      username
+  
+    }
+  }
+`;

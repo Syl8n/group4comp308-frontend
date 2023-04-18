@@ -7,12 +7,14 @@ import NurseMenu from './components/Nurse/NurseMenu';
 import PredictHeartDisease from './components/Nurse/PredictHeartDisease';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
+import VitalSignsForm from './components/Nurse/VitalSignsForm';
 
 
 // Initialize Apollo Client
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  batchcredentials: 'include',
 });
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
           <Route exact path="/patient/:id" element={<PatientMenu />} />
           <Route exact path="/nurse/:id" element={<NurseMenu />} />
           <Route exact path="/predict" element={<PredictHeartDisease/>}/>
+          <Route exact path="/vitalsigns/:id" element={<VitalSignsForm/>} />
         </Routes>
       </Router>
     </ApolloProvider>

@@ -28,7 +28,9 @@ const NurseMenu = () => {
         // redirect to login page
         navigate('/');
     };
-
+    const handleVitalSignsSelect = (patient) => {
+        navigate(`/vitalsigns/${patient._id}`);
+    };
 
 
     console.log(data); // make sure data is not undefined
@@ -60,14 +62,30 @@ const NurseMenu = () => {
                         <tr key={patient._id} onClick={() => handlePatientSelect(patient)}>
                             <td>{patient.firstname}</td>
                             <td>{patient.lastname}</td>
-                            <td>{patient.username}</td>
-
+                            <td style={{position: 'relative'}}>
+                            {patient.username}
+                            {selectedPatient?._id === patient._id && (
+                            
+                                    <Dropdown style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)', zIndex: 1  }}>
+                                        <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                                            <i className="fas fa-caret-down" style={{ fontSize: '20px' }}></i>
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                            <Dropdown.Item onClick={() => handleVitalSignsSelect(patient)}>Enter Vital Signs</Dropdown.Item>
+                                            <Dropdown.Item>Access Previous Visit Info</Dropdown.Item>
+                                            <Dropdown.Item>Send Motivational Tips</Dropdown.Item>
+                                            <Dropdown.Item>Generate List of Medical Conditions</Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                            )}
+                            </td>
                         </tr>
                     ))}
-               
-                {loading && <tr><td>Loading...</td></tr>}
-                {error && <tr><td>Error: {error.message}</td></tr>}
+
+                    {loading && <tr><td>Loading...</td></tr>}
+                    {error && <tr><td>Error: {error.message}</td></tr>}
                 </tbody>
+
             </Table>
             {selectedPatient && (
                 <Dropdown style={{ position: 'absolute', top: '100px', right: '50px' }}>

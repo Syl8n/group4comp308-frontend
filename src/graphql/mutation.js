@@ -26,3 +26,26 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const ADD_VITAL_SIGNS = gql`
+mutation AddVitalSigns($form: VitalSignInput!) {
+  addVitalSign(form: $form) {
+    _id
+    temperature
+    heartRate
+    bloodPressureMax
+    bloodPressureMin
+    respiratoryRate
+    member {
+      _id
+      firstname
+      lastname
+    }
+    writer {
+      _id
+      firstname
+      lastname
+    }
+  }
+}
+`;
