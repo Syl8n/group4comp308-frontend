@@ -75,7 +75,8 @@ const NurseMenu = () => {
                         <Dropdown.Item>Enter Vital Signs</Dropdown.Item>
                         <Dropdown.Item>Access Previous Visit Info</Dropdown.Item>
                         <Dropdown.Item>Send Motivational Tips</Dropdown.Item>
-                        <Dropdown.Item>Generate List of Medical Conditions</Dropdown.Item>
+                        <Dropdown.Item onClick={() => navigate('/predict')}>Detect Heart Disease</Dropdown.Item>
+
                     </Dropdown.Menu>
                 </Dropdown>
             )}
