@@ -69,3 +69,18 @@ mutation AddMotivationalTip($form: TipInput!) {
   }
 }
 `;
+
+export const CREATE_EMERGENCY_ALERT = gql`
+  mutation AddEmergencyAlert($severity: String!) {
+    addEmergencyAlert(severity: $severity) {
+      _id
+      patient {
+        _id
+        firstname
+        lastname
+      }
+      createdAt
+      severity
+    }
+  }
+`;

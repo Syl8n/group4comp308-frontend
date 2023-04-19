@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { Row, Col, Button, Card, Container } from 'react-bootstrap';
+import { Row, Col, Card, Container } from 'react-bootstrap';
 import { GET_MOTIVATIONAL_TIPS } from '../../graphql/query';
 
 const DailyTips = () => {

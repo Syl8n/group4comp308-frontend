@@ -16,6 +16,7 @@ import GameFrame from './components/Patient/GameFeature';
 import Footer from './components/Common/Footer';
 import MotivationalTip from './components/Nurse/MotivationalTip';
 import PatientHomePage from "./components/Patient/PatientHomePage";
+import EmergencyAlertForm from "./components/Patient/EmergencyAlertForm";
 
 
 
@@ -43,6 +44,7 @@ function App() {
           <Route exact path="/patient/:id/symptom-checklist" element={<Checklist />} />
           <Route exact path="/sendmotivationaltip/:id" element={<MotivationalTip />} />
           <Route exact path="/game" element={<GameFrame />} />
+          <Route exact path="/patient/:id/emergency-alert" element={<EmergencyAlertForm/>} />
 
         </Routes>
         <Footer />

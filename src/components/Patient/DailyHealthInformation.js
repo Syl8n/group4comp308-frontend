@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { ADD_VITAL_SIGNS } from '../../graphql/mutation';
 
 
+
 const DailyHealthInformation = () => {
   const navigate = useNavigate();
   const patientid = localStorage.getItem('userId')
@@ -22,12 +23,7 @@ const DailyHealthInformation = () => {
     respiratoryRate: "",
   });
 
-  const handleChange = (event) => {
-    setDailyHealthData({
-      ...dailyHealthData,
-      [event.target.name]: event.target.value,
-    });
-  };
+ 
 
   const dailyHealthDataFormHandler = async (event) => {
     event.preventDefault();
@@ -52,7 +48,7 @@ const DailyHealthInformation = () => {
       // Show alert and redirect to nurse's main menu
       if (data && data.addVitalSign) {
           alert('Vital signs submitted successfully!');
-          const nurseId = localStorage.getItem('userId');
+ 
           navigate('/patient/' + patientid);
       }
   } catch (error) {
@@ -69,6 +65,9 @@ const DailyHealthInformation = () => {
   if (addError) return <p>Error submitting vital sings: {addError.message}</p>
 
   return (
+    <div>
+
+    
     <div className="container">
 
       <Card border="primary" className='m-auto mt-3 w-50 px-4 shadow-lg p-3 mb-5 bg-body rounded'>
@@ -166,6 +165,7 @@ const DailyHealthInformation = () => {
           </Form>
         </Card.Body>
       </Card>
+    </div>
     </div>
   );
 };
