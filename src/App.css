@@ -40,3 +40,18 @@
 .submit-button {
   height: 100px; /* Change the value to match the height of the form fields */
 }
+
+.card {
+  margin-bottom: 50px;
+}
+
+.navbar {
+  padding: 20px !important;
+}
+
+.hover-inflate:hover {
+  transform: scale(1.05);
+  transition-duration: 0.3s;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+

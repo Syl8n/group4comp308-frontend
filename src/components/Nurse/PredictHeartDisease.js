@@ -138,8 +138,8 @@ function PredictHeartDisease() {
 
     return (
         <div>
-            <Navbar className="navbar navbar-dark bg-dark">
-                <Navbar.Brand>Welcome!</Navbar.Brand>
+            <Navbar className="navbar navbar-dark bg-dark custom-navbar">
+                <Navbar.Brand>Predict Page</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 </Navbar.Collapse>
@@ -240,17 +240,18 @@ function PredictHeartDisease() {
                                 <option value="3">Reversible Defect</option>
                             </Form.Select>
                         </FloatingLabel>
-                        <div className='mt-2'>
-                            <Button variant="primary" type="submit">
-                                Submit
-                            </Button>
+                        <div className="d-flex justify-content-center mt-2">
+                            <div className="col-sm-4" style={{ margin: '20px 0' }}>
+                                <Button variant="primary" type="submit" className="w-100">
+                                    Submit
+                                </Button>
+                            </div>
+                            <div className="col-sm-4" style={{ marginLeft: '10px', margin: '20px 0' }}>
+                                <Button variant="secondary" onClick={handleCancel} className="w-100">
+                                    Cancel
+                                </Button>
+                            </div>
                         </div>
-                        <div className='mt-2'>
-                            <Button variant="secondary" onClick={handleCancel}>
-                                Cancel
-                            </Button>
-                        </div>
-
                     </Form>
                 </div>
 
@@ -261,9 +262,9 @@ function PredictHeartDisease() {
                     <Modal.Body>
                         <div className="d-flex justify-content-center">
                             {hasHeartDisease ? (
-                                <p className="text-danger">You have heart disease.</p>
+                                <p className="text-danger">Patient have heart disease.</p>
                             ) : (
-                                <p className="text-success">You do not have heart disease.</p>
+                                <p className="text-success">Patient do not have heart disease.</p>
                             )}
                         </div>
                         <div className="d-flex justify-content-center">

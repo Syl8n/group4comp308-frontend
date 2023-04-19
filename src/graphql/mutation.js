@@ -49,3 +49,23 @@ mutation AddVitalSigns($form: VitalSignInput!) {
   }
 }
 `;
+
+export const ADD_MOTIVATIONAL_TIP = gql`
+mutation AddMotivationalTip($form: TipInput!) {
+  addMotivationalTip(form: $form) {
+    _id
+    title
+    tip
+    member {
+      _id
+      firstname
+      lastname
+    }
+    writer {
+      _id
+      firstname
+      lastname
+    }
+  }
+}
+`;

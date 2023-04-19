@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Card } from 'react-bootstrap';
+import { Navbar, Form, Button, Card } from 'react-bootstrap';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_MEMBER } from '../../graphql/query';
 import { useParams } from 'react-router-dom'; // import useParams
@@ -18,8 +18,6 @@ const VitalSignsForm = () => {
             console.error(addError);
         },
     });
-
-
 
     const [bodyTemperature, setBodyTemperature] = useState('');
     const [heartRate, setHeartRate] = useState('');
@@ -80,74 +78,86 @@ const VitalSignsForm = () => {
     const { firstname, lastname } = data.getMember;
 
     return (
-        <Card border="primary" className='m-auto mt-3 w-50'>
-            <Card.Body>
-                <Form onSubmit={handleSubmit}>
-                    <Card.Title>
-                        <h3>Enter Vital Signs for {firstname} {lastname}</h3>
-                    </Card.Title>
-                    <Form.Group controlId="formBodyTemperature">
-                        <Form.Label>Body Temperature (°F)</Form.Label>
-                        <Form.Control
-                            type="number"
-                            step="0.1"
-                            value={bodyTemperature}
-                            onChange={(e) => setBodyTemperature(e.target.value)}
-                        />
-                    </Form.Group>
+        <div>
+            <Navbar className="navbar navbar-dark bg-dark custom-navbar">
+                <Navbar.Brand>Vital Signs Page</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                </Navbar.Collapse>
+            </Navbar>
 
-                    <Form.Group controlId="formHeartRate">
-                        <Form.Label>Heart Rate (bpm)</Form.Label>
-                        <Form.Control
-                            type="number"
-                            step="1"
-                            value={heartRate}
-                            onChange={(e) => setHeartRate(e.target.value)}
-                        />
-                    </Form.Group>
 
-                    <Form.Group controlId="formBloodPressureMax">
-                        <Form.Label>Blood Pressure Max (mmHg)</Form.Label>
-                        <Form.Control
-                            type="number"
-                            step="1"
-                            value={bloodPressureMax}
-                            onChange={(e) => setBloodPressureMax(e.target.value)}
-                        />
-                    </Form.Group>
+            <Card border="primary" className='m-auto mt-3 w-50'>
+                <Card.Body>
+                    <Form onSubmit={handleSubmit}>
+                        <Card.Title>
+                            <h3>Enter Vital Signs for {firstname} {lastname}</h3>
+                        </Card.Title>
+                        <Form.Group controlId="formBodyTemperature">
+                            <Form.Label>Body Temperature (°F)</Form.Label>
+                            <Form.Control
+                                type="number"
+                                step="0.1"
+                                value={bodyTemperature}
+                                onChange={(e) => setBodyTemperature(e.target.value)}
+                            />
+                        </Form.Group>
 
-                    <Form.Group controlId="formBloodPressureMin">
-                        <Form.Label>Blood Pressure Min (mmHg)</Form.Label>
-                        <Form.Control
-                            type="number"
-                            step="1"
-                            value={bloodPressureMin}
-                            onChange={(e) => setBloodPressureMin(e.target.value)}
-                        />
-                    </Form.Group>
+                        <Form.Group controlId="formHeartRate">
+                            <Form.Label>Heart Rate (bpm)</Form.Label>
+                            <Form.Control
+                                type="number"
+                                step="1"
+                                value={heartRate}
+                                onChange={(e) => setHeartRate(e.target.value)}
+                            />
+                        </Form.Group>
 
-                    <Form.Group controlId="formRespiratoryRate">
-                        <Form.Label>Respiratory Rate (breaths per minute)</Form.Label>
-                        <Form.Control
-                            type="number"
-                            step="1"
-                            value={respiratoryRate}
-                            onChange={(e) => setRespiratoryRate(e.target.value)}
-                        />
-                    </Form.Group>
-                    <div className='mt-2'>
-                        <Button variant="primary" type="submit">
-                            Submit
-                        </Button>
-                    </div>
-                    <div className='mt-2'>
-                        <Button variant="secondary" onClick={handleCancel}>
-                            Cancel
-                        </Button>
-                    </div>
-                </Form>
-            </Card.Body>
-        </Card>
+                        <Form.Group controlId="formBloodPressureMax">
+                            <Form.Label>Blood Pressure Max (mmHg)</Form.Label>
+                            <Form.Control
+                                type="number"
+                                step="1"
+                                value={bloodPressureMax}
+                                onChange={(e) => setBloodPressureMax(e.target.value)}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formBloodPressureMin">
+                            <Form.Label>Blood Pressure Min (mmHg)</Form.Label>
+                            <Form.Control
+                                type="number"
+                                step="1"
+                                value={bloodPressureMin}
+                                onChange={(e) => setBloodPressureMin(e.target.value)}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formRespiratoryRate">
+                            <Form.Label>Respiratory Rate (breaths per minute)</Form.Label>
+                            <Form.Control
+                                type="number"
+                                step="1"
+                                value={respiratoryRate}
+                                onChange={(e) => setRespiratoryRate(e.target.value)}
+                            />
+                        </Form.Group>
+                        <div className="d-flex justify-content-center mt-2">
+                            <div className="col-sm-4" style={{ margin: '20px 0' }}>
+                                <Button variant="primary" type="submit" className="w-100">
+                                    Submit
+                                </Button>
+                            </div>
+                            <div className="col-sm-4" style={{ marginLeft: '100px', margin: '20px 0' }}>
+                                <Button variant="secondary" onClick={handleCancel} className="w-100">
+                                    Cancel
+                                </Button>
+                            </div>
+                        </div>
+                    </Form>
+                </Card.Body>
+            </Card>
+        </div>
     );
 };
 
