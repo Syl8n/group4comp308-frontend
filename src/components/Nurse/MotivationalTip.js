@@ -37,6 +37,12 @@ const MotivationalTip = () => {
         try {
             const { data } = await addMotivationalTip({ variables });
             console.log(data)
+
+            if (data) {
+              alert('Vital signs submitted successfully!');
+              const nurseId = localStorage.getItem('userId');
+              navigate('/nurse/' + nurseId);
+          }
         } catch (error) {
             console.error(error.message);
             // Handle the error here
