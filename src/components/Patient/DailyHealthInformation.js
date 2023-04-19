@@ -1,10 +1,10 @@
 import React from "react";
 
 const dailyHealthData = {
-  pulseRate: "",
-  bloodPressure: "",
-  weight: "",
-  temperature: "",
+  bodyTemperature: "",
+  heartRate: "",
+  bloodPressureMax: "",
+  bloodPressureMin: "",
   respiratoryRate: "",
 };
 
@@ -18,73 +18,75 @@ const DailyHealthInformation = () => {
     console.log(dailyHealthData);
     // add the api call here
   };
-
   return (
-    <div className="container">
-      <div className="my-2 py-4">
-        <h1 className="display-5">Daily Health Information</h1>
+    <div className="container w-50 mt-4 border border-success rounded px-4 shadow-lg p-3 mb-5 bg-body rounded">
+      <div className="pt-2">
+        <h1 className="lead">Enter your Vital Signs</h1>
       </div>
 
       <form
-        className=" container w-50 border border-success rounded px-4 shadow-lg p-3 mb-5 bg-body rounded"
         method="POST"
         onChange={handleChange}
         onSubmit={dailyHealthDataFormHandler}
       >
         <div className="d-flex flex-column ">
-          <div className="m-3">
+          <div className="m-3 d-flex flex-column">
+            <label forhtml="bodyTemperature">Body Temperature (°F)</label>
             <input
-              className="form-control"
+              className="form-control my-2"
               type="number"
-              id="pulseRate"
+              id="bodyTemperature"
               required
-              name="pulseRate"
-              placeholder="Pulse Rate"
-              min="1"
-            />
-          </div>
-          <div className="m-3">
-            <input
-              className="form-control"
-              type="number"
-              id="bloodPressure"
-              required
-              name="bloodPressure"
-              placeholder="Blood Pressure"
+              name="bodyTemperature"
               min="1"
             />
           </div>
 
-          <div className="m-3">
+          <div className="m-3 d-flex flex-column">
+            <label forhtml="heartRate">Heart Rate (bpm)</label>
             <input
-              className="form-control"
+              className="form-control my-2"
               type="number"
-              id="weight"
+              id="heartRate"
               required
-              name="weight"
-              placeholder="Weight"
+              name="heartRate"
               min="1"
             />
           </div>
-          <div className="m-3">
+
+          <div className="m-3 d-flex flex-column">
+            <label forhtml="bloodPressureMax">Blood Pressure Max (mmHg)</label>
             <input
-              className="form-control"
+              className="form-control my-2"
               type="number"
-              id="temperature"
-              name="temperature"
+              id="bloodPressureMax"
               required
-              placeholder="Temperature"
+              name="bloodPressureMax"
               min="1"
             />
           </div>
-          <div className="m-3">
+
+          <div className="m-3 d-flex flex-column">
+            <label forhtml="bloodPressureMin">Blood Pressure Min (mmHg)</label>
             <input
-              className="form-control"
-              type="text"
+              className="form-control my-2"
+              type="number"
+              id="bloodPressureMin"
+              name="bloodPressureMin"
+              required
+              min="1"
+            />
+          </div>
+          <div className="m-3 d-flex flex-column">
+            <label forhtml="respiratoryRate">
+              Respiratory Rate (breaths per minute)
+            </label>
+            <input
+              className="form-control my-2"
+              type="number"
               id="respiratoryRate"
               required
               name="respiratoryRate"
-              placeholder="Respiratory Rate"
               min="1"
             />
           </div>
