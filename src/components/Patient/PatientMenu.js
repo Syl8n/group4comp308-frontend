@@ -30,7 +30,7 @@ const PatientMenu = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto">
                         <NavLink className="nav-link" to={`/patient/${patientId}/emergency-alert`}>Emergency Alert</NavLink>
-                        <NavLink className="nav-link" to={`/patient/${patientId}/fitness-games`}>Fitness Games</NavLink>
+                        <NavLink className="nav-link" to={`/game`}>Fitness Games</NavLink>
                         <NavLink className="nav-link" to={`/patient/${patientId}/daily-info`}>Daily Info</NavLink>
                         <NavLink className="nav-link" to={`/patient/${patientId}/symptom-checklist`}>Symptom Checklist</NavLink>
 
