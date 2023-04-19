@@ -36,6 +36,10 @@ const NurseMenu = () => {
         navigate(`/previousvisit/${patient._id}`);
     };
 
+    const handleTipsSelect = (patient) => {
+        navigate(`/sendmotivationaltip/${patient._id}`);
+    };
+
 
     console.log(data); // make sure data is not undefined
 
@@ -76,7 +80,7 @@ const NurseMenu = () => {
                                         <Dropdown.Menu>
                                             <Dropdown.Item onClick={() => handleVitalSignsSelect(patient)}>Enter Vital Signs</Dropdown.Item>
                                             <Dropdown.Item onClick={() => handlePreviousVisitSelect(patient)}>Access Previous Visit Info</Dropdown.Item>
-                                            <Dropdown.Item>Send Motivational Tips</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => handleTipsSelect(patient)}>Send Motivational Tips</Dropdown.Item>
                                             <Dropdown.Item onClick={() => navigate('/predict')}>Detect Heart Disease</Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
