@@ -42,8 +42,6 @@ const PatientMenu = () => {
                 </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <DailyTips />
-            {/* Add your page content here */}
         </div>
     );
 };

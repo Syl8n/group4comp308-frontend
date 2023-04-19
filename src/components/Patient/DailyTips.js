@@ -23,6 +23,7 @@ const DailyTips = () => {
         <Row xs={1} sm={2} md={3} lg={3} className="g-4">
           {data.getTipsByMemberId.map((tip, index) => {
             const formattedTitle = tip.title.replace(/\s/g, '%20')
+            console.log(tip)
             return (
               <Col key={tip._id}>
                 <Card

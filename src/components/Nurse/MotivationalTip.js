@@ -39,7 +39,7 @@ const MotivationalTip = () => {
             console.log(data)
 
             if (data) {
-              alert('Vital signs submitted successfully!');
+              alert('Motivational tip sent successfully!');
               const nurseId = localStorage.getItem('userId');
               navigate('/nurse/' + nurseId);
           }

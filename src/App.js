@@ -15,6 +15,7 @@ import DailyHealthInformation from "./components/Patient/DailyHealthInformation"
 import GameFrame from './components/Patient/GameFeature';
 import Footer from './components/Common/Footer';
 import MotivationalTip from './components/Nurse/MotivationalTip';
+import PatientHomePage from "./components/Patient/PatientHomePage";
 
 
 
@@ -31,6 +32,7 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<AuthPage />} />
+          <Route exact path="/patienthome/:id" element={<PatientHomePage />} />
           <Route exact path="/patient/:id" element={<PatientMenu />} />
           <Route exact path="/nurse/:id" element={<NurseMenu />} />
           <Route exact path="/predict" element={<PredictHeartDisease />} />
