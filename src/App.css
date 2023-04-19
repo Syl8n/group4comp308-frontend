@@ -59,3 +59,15 @@
   background-color: orange;
 }
 
+tr.mild {
+  background-color: #8ccaf0;
+}
+
+tr.severe {
+  background-color: #fcf537;
+}
+
+tr.critical {
+  background-color: #e44d32;
+}
+

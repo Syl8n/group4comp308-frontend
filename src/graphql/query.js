@@ -57,4 +57,20 @@ query GetTipsByMemberId($memberId: ID!) {
     createdAt
   }
 }
-`
+`;
+
+export const GET_ACTIVE_EMERGENCY_ALERTS = gql`
+  query GetActiveEmergencyAlerts {
+    getActiveEmergencyAlerts {
+      _id
+      patient {
+        _id
+        firstname
+        lastname
+      }
+      createdAt
+      severity
+      status
+    }
+  }
+`;

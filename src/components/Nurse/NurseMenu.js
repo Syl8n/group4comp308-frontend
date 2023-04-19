@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Button, Table, Dropdown } from 'react-bootstrap';
 import { useQuery } from '@apollo/client';
-import { GET_PATIENT_MEMBERS } from '../../graphql/query';
+import { GET_PATIENT_MEMBERS, GET_ACTIVE_EMERGENCY_ALERTS } from '../../graphql/query';
 import { useNavigate } from 'react-router-dom';
 import cookie from 'js-cookie';
 
@@ -9,9 +9,14 @@ import cookie from 'js-cookie';
 const NurseMenu = () => {
     const navigate = useNavigate();
     const [selectedPatient, setSelectedPatient] = useState(null);
-    const { loading, error, data } = useQuery(GET_PATIENT_MEMBERS);
+    const { loading: membersLoading, error: membersError, data: membersData } = useQuery(GET_PATIENT_MEMBERS);
+    const { loading: alertsLoading, error: alertsError, data: alertsData } = useQuery(GET_ACTIVE_EMERGENCY_ALERTS);
     const firstName = localStorage.getItem('firstname');
 
+    // Determine if any of the patients have an active emergency alert
+    const hasActiveAlert = membersData?.getMembers.some((member) =>
+        alertsData?.getActiveEmergencyAlerts.some((alert) => alert.patient?._id === member._id)
+    );
     const handlePatientSelect = (patient) => {
         setSelectedPatient(patient);
     };
@@ -41,7 +46,7 @@ const NurseMenu = () => {
     };
 
 
-    console.log(data); // make sure data is not undefined
+
 
     return (
         <div>
@@ -65,31 +70,67 @@ const NurseMenu = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data?.getMembers.map((patient) => (
-                        <tr key={patient._id} onClick={() => handlePatientSelect(patient)}>
-                            <td>{patient.firstname}</td>
-                            <td>{patient.lastname}</td>
-                            <td style={{ position: 'relative' }}>
-                                {patient.username}
-                                {selectedPatient?._id === patient._id && (
+                    {membersData?.getMembers.map((patient) => {
+                        const activeAlert = alertsData?.getActiveEmergencyAlerts.find(
+                            (alert) => alert.patient?._id === patient._id
+                        );
+                        const severity = activeAlert?.severity;
+                        const active = activeAlert?.status === 'ACTIVE';
 
-                                    <Dropdown style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)', zIndex: 1 }}>
-                                        <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                                            <i className="fas fa-caret-down" style={{ fontSize: '20px' }}></i>
-                                        </Dropdown.Toggle>
-                                        <Dropdown.Menu>
-                                            <Dropdown.Item onClick={() => handleVitalSignsSelect(patient)}>Enter Vital Signs</Dropdown.Item>
-                                            <Dropdown.Item onClick={() => handlePreviousVisitSelect(patient)}>Access Previous Visit Info</Dropdown.Item>
-                                            <Dropdown.Item onClick={() => handleTipsSelect(patient)}>Send Motivational Tips</Dropdown.Item>
-                                            <Dropdown.Item onClick={() => navigate('/predict')}>Detect Heart Disease</Dropdown.Item>
-                                        </Dropdown.Menu>
-                                    </Dropdown>
-                                )}
-                            </td>
-                        </tr>
-                    ))}
-                    {loading && <tr><td>Loading...</td></tr>}
-                    {error && <tr><td>Error: {error.message}</td></tr>}
+                        return (
+                            <tr
+                                key={patient._id}
+                                className={
+                                    active
+                                        ? severity?.toLowerCase()
+                                        : ''
+                                }
+                                onClick={() => handlePatientSelect(patient)}
+                            >
+                                <td>{patient.firstname}</td>
+                                <td>{patient.lastname}</td>
+                                <td style={{ position: 'relative' }}>
+                                    {patient.username}
+                                    {selectedPatient?._id === patient._id && (
+                                        <Dropdown
+                                            style={{
+                                                position: 'absolute',
+                                                right: 20,
+                                                top: '50%',
+                                                transform: 'translateY(-50%)',
+                                                zIndex: 1,
+                                            }}
+                                        >
+                                            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                                                <i className="fas fa-caret-down" style={{ fontSize: '20px' }}></i>
+                                            </Dropdown.Toggle>
+                                            <Dropdown.Menu>
+                                                <Dropdown.Item onClick={() => handleVitalSignsSelect(patient)}>
+                                                    Enter Vital Signs
+                                                </Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handlePreviousVisitSelect(patient)}>
+                                                    Access Previous Visit Info
+                                                </Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handleTipsSelect(patient)}>
+                                                    Send Motivational Tips
+                                                </Dropdown.Item>
+                                                {active && (
+                                                    <Dropdown.Item > 
+                                                        Resolve Emergency
+                                                    </Dropdown.Item>
+                                                )}
+                                                <Dropdown.Item onClick={() => navigate('/predict')}>
+                                                    Detect Heart Disease
+                                                </Dropdown.Item>
+                                            </Dropdown.Menu>
+                                        </Dropdown>
+                                    )}
+                                </td>
+                            </tr>
+                        );
+                    })}
+                    {membersLoading && <tr><td>Loading...</td></tr>}
+                    {membersError && <tr><td>Error: {membersError.message}</td></tr>}
                 </tbody>
             </Table>
         </div>
