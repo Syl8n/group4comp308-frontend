@@ -37,7 +37,7 @@ const AuthPage = () => {
 
               // Redirect to the appropriate page based on the user's role
               if (data.login.member.role === 'PATIENT') {
-                navigate(`/patient/${data.login.member._id}`);
+                navigate(`/patienthome/${data.login.member._id}`);
             } else {
                 navigate(`/nurse/${data.login.member._id}`);
             }
