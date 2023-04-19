@@ -1,6 +1,17 @@
 #grid {
-    width: 400px;
-    height: 300px;
+    width: 650px;
+    height: 450px;
     display: flex;
     flex-wrap: wrap;
+}
+
+img {
+  width: 150px;
+  height: 150px;
+  border: 1px solid black
+}
+
+h2, h3 {
+  margin-top: 0px;
+  margin-bottom: 5px
 }

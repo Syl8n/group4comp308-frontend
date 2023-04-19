@@ -65,6 +65,7 @@ function createBoard () {
         card.addEventListener('click', flipCard)
         gridDisplay.append(card)
     }
+    resultDisplay.textContent = `Score: ${cardsWon.length}`
 }
 
 createBoard()
@@ -92,7 +93,7 @@ function checkMatch() {
         cards[optionOneId].setAttribute('src', 'images/blank.png')
         cards[optionTwoId].setAttribute('src', 'images/blank.png')
     }
-    resultDisplay.textContent = cardsWon.length
+    resultDisplay.textContent = `Score: ${cardsWon.length}`
 
     cardsChosen = []
     cardsChosenIds = []

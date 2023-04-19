@@ -23,12 +23,12 @@ function GameFrame() {
     >
       <div
         style={{
-          display: 'flex',
+          display: 'inline-block',
           alignItems: 'center',
           justifyContent: 'center',
-          width: '800px',
-          height: '600px',
-          border: '1px solid black',
+          width: '700px',
+          height: '550px',
+          border: '1px solid gray',
         }}
       >
         <iframe
