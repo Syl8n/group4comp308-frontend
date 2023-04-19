@@ -143,12 +143,12 @@ const VitalSignsForm = () => {
                             />
                         </Form.Group>
                         <div className="d-flex justify-content-center mt-2">
-                            <div className="col-sm-4" style={{ margin: '20px 0' }}>
+                            <div className="mt-2" style={{ margin: '20px 0' }}>
                                 <Button variant="primary" type="submit" className="w-100">
                                     Submit
                                 </Button>
                             </div>
-                            <div className="col-sm-4" style={{ marginLeft: '100px', margin: '20px 0' }}>
+                            <div className="mt-2" style={{ marginLeft: '100px', margin: '20px 0' }}>
                                 <Button variant="secondary" onClick={handleCancel} className="w-100">
                                     Cancel
                                 </Button>

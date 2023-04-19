@@ -8,29 +8,30 @@ import { useNavigate } from 'react-router-dom';
 const PreviousVisits = () => {
     const navigate = useNavigate();
     const { id: patientId } = useParams();
+    const nurseId = localStorage.getItem('userId')
+    console.log('nurse id: ', nurseId)
     const { loading: memberLoading, error: memberError, data: memberData } = useQuery(GET_MEMBER, {
-      variables: { _id: patientId },
+        variables: { _id: patientId },
     });
     const { loading: vitalSignsLoading, error: vitalSignsError, data: vitalSignsData } = useQuery(GET_PREVIOUS_VISITS, {
-      variables: { memberId: patientId },
+        variables: { memberId: patientId },
     });
-  
+
     if (memberLoading || vitalSignsLoading) {
-      return <p>Loading...</p>;
+        return <p>Loading...</p>;
     }
-  
+
     if (memberError || vitalSignsError) {
-      return <p>Error: {memberError ? memberError.message : vitalSignsError.message}</p>;
+        return <p>Error: {memberError ? memberError.message : vitalSignsError.message}</p>;
     }
-  
+
     const { firstname, lastname } = memberData.getMember;
 
-    
-    
-    
-  
+
+
+
+
     const handleBackBtn = () => {
-        const nurseId = localStorage.getItem('userId')
         navigate('/nurse/' + nurseId);
     };
 
@@ -39,8 +40,8 @@ const PreviousVisits = () => {
     return (
         <div className='container'>
 
-        <h2>Previous Visits - {firstname} {lastname}</h2>
-            <Table striped bordered hover>
+            <h2>Previous Visits - {firstname} {lastname}</h2>
+            <Table bordered hover>
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -51,16 +52,26 @@ const PreviousVisits = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {vitalSignsData?.getVitalSigns.map((visit) => (
-                        <tr key={visit._id}>
-                            <td>{new Date(visit.createdAt).toLocaleString()}</td>
-                            <td>{visit.temperature}</td>
-                            <td>{visit.heartRate}</td>
-                            <td>{visit.bloodPressureMax}/{visit.bloodPressureMin}</td>
-                            <td>{visit.respiratoryRate}</td>
-                        </tr>
-                    ))}
+                    {vitalSignsData?.getVitalSigns.map((visit) => {
+                        console.log(visit.member._id);
+                        return (
+                            <tr key={visit._id} className={visit.writer._id !== nurseId ? 'highlighted-row' : ''}>
+                                <td>{new Date(visit.createdAt).toLocaleString()}</td>
+                                <td>{visit.temperature}</td>
+                                <td>{visit.heartRate}</td>
+                                <td>{visit.bloodPressureMax}/{visit.bloodPressureMin}</td>
+                                <td>{visit.respiratoryRate}</td>
+                            </tr>
+                        );
+                    })}
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colSpan='5' className='text-end'>
+                            <small>* Orange rows represent patient-entered vital signs</small>
+                        </td>
+                    </tr>
+                </tfoot>
             </Table>
             <div className='mt-2'>
                 <Button variant="secondary" onClick={handleBackBtn}>

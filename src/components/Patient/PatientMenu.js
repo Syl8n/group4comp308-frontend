@@ -32,7 +32,7 @@ const PatientMenu = () => {
                     <Nav className="ml-auto">
                         <NavLink className="nav-link" to={`/patient/${patientId}/emergency-alert`}>Emergency Alert</NavLink>
                         <NavLink className="nav-link" to={`/game`}>Fitness Games</NavLink>
-                        <NavLink className="nav-link">Daily Info</NavLink>
+                        <NavLink className="nav-link" to={`/patient/${patientId}/dailyinfo`}>Daily Info</NavLink>
                         <NavLink className="nav-link" to={`/patient/${patientId}/symptom-checklist`}>Symptom Checklist</NavLink>
 
                     </Nav>

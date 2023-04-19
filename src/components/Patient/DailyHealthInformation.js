@@ -1,113 +1,171 @@
-import React from "react";
+import React, { useState } from "react";
+import { Form, Button, Card } from 'react-bootstrap';
+import {  useMutation } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
+import { ADD_VITAL_SIGNS } from '../../graphql/mutation';
 
-const dailyHealthData = {
-  bodyTemperature: "",
-  heartRate: "",
-  bloodPressureMax: "",
-  bloodPressureMin: "",
-  respiratoryRate: "",
-};
 
 const DailyHealthInformation = () => {
+  const navigate = useNavigate();
+  const patientid = localStorage.getItem('userId')
+  const [addVitalSigns, { addLoading, addError }] = useMutation(ADD_VITAL_SIGNS, {
+    onError: (addError) => {
+      console.error(addError);
+    },
+  });
+
+  const [dailyHealthData, setDailyHealthData] = useState({
+    bodyTemperature: "",
+    heartRate: "",
+    bloodPressureMax: "",
+    bloodPressureMin: "",
+    respiratoryRate: "",
+  });
+
   const handleChange = (event) => {
-    dailyHealthData[`${event.target.name}`] = event.target.value;
+    setDailyHealthData({
+      ...dailyHealthData,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const dailyHealthDataFormHandler = async (event) => {
     event.preventDefault();
     console.log(dailyHealthData);
-    // add the api call here
+    
+    try {
+      const { data } = await addVitalSigns({
+          variables: {
+              form: {
+                  memberId: patientid,
+                  temperature: parseFloat(dailyHealthData.bodyTemperature),
+                  heartRate: parseInt(dailyHealthData.heartRate),
+                  bloodPressureMax: parseInt(dailyHealthData.bloodPressureMax),
+                  bloodPressureMin: parseInt(dailyHealthData.bloodPressureMin),
+                  respiratoryRate: parseInt(dailyHealthData.respiratoryRate),
+
+              },
+          },
+      });
+      console.log(data)
+
+      // Show alert and redirect to nurse's main menu
+      if (data && data.addVitalSign) {
+          alert('Vital signs submitted successfully!');
+          const nurseId = localStorage.getItem('userId');
+          navigate('/patient/' + patientid);
+      }
+  } catch (error) {
+      console.error(addError);
+      // Handle the error here
+  }
   };
+
+  const handleCancel = () => {
+    navigate('/patient/' + patientid);
+  };
+
+  if (addLoading) return <p>Submitting vital signs...</p>
+  if (addError) return <p>Error submitting vital sings: {addError.message}</p>
+
   return (
-    <div className="container w-50 mt-4 border border-success rounded px-4 shadow-lg p-3 mb-5 bg-body rounded">
-      <div className="pt-2">
-        <h1 className="lead">Enter your Vital Signs</h1>
-      </div>
+    <div className="container">
 
-      <form
-        method="POST"
-        onChange={handleChange}
-        onSubmit={dailyHealthDataFormHandler}
-      >
-        <div className="d-flex flex-column ">
-          <div className="m-3 d-flex flex-column">
-            <label forhtml="bodyTemperature">Body Temperature (°F)</label>
-            <input
-              className="form-control my-2"
-              type="number"
-              id="bodyTemperature"
-              required
-              name="bodyTemperature"
-              min="1"
-            />
-          </div>
+      <Card border="primary" className='m-auto mt-3 w-50 px-4 shadow-lg p-3 mb-5 bg-body rounded'>
+        <Card.Body>
+          <Form onSubmit={dailyHealthDataFormHandler} >
+            <Card.Title>
+              <h3>Enter Vital Signs</h3>
+            </Card.Title>
+            <Form.Group controlId="formBodyTemperature">
+              <Form.Label>Body Temperature (°F)</Form.Label>
+              <Form.Control
+                type="number"
+                step="0.1"
+                value={dailyHealthData.bodyTemperature}
+                onChange={(event) =>
+                  setDailyHealthData({
+                    ...dailyHealthData,
+                    bodyTemperature: event.target.value,
+                  })
+                }
+              />
+            </Form.Group>
 
-          <div className="m-3 d-flex flex-column">
-            <label forhtml="heartRate">Heart Rate (bpm)</label>
-            <input
-              className="form-control my-2"
-              type="number"
-              id="heartRate"
-              required
-              name="heartRate"
-              min="1"
-            />
-          </div>
+            <Form.Group controlId="formHeartRate">
+              <Form.Label>Heart Rate (bpm)</Form.Label>
+              <Form.Control
+                type="number"
+                step="1"
+                value={dailyHealthData.heartRate}
+                onChange={(event) =>
+                  setDailyHealthData({
+                    ...dailyHealthData,
+                    heartRate: event.target.value,
+                  })
+                }
+              />
+            </Form.Group>
 
-          <div className="m-3 d-flex flex-column">
-            <label forhtml="bloodPressureMax">Blood Pressure Max (mmHg)</label>
-            <input
-              className="form-control my-2"
-              type="number"
-              id="bloodPressureMax"
-              required
-              name="bloodPressureMax"
-              min="1"
-            />
-          </div>
+            <Form.Group controlId="formBloodPressureMax">
+              <Form.Label>Blood Pressure Max (mmHg)</Form.Label>
+              <Form.Control
+                type="number"
+                step="1"
+                value={dailyHealthData.bloodPressureMax}
+                onChange={(event) =>
+                  setDailyHealthData({
+                    ...dailyHealthData,
+                    bloodPressureMax: event.target.value,
+                  })
+                }
+              />
+            </Form.Group>
 
-          <div className="m-3 d-flex flex-column">
-            <label forhtml="bloodPressureMin">Blood Pressure Min (mmHg)</label>
-            <input
-              className="form-control my-2"
-              type="number"
-              id="bloodPressureMin"
-              name="bloodPressureMin"
-              required
-              min="1"
-            />
-          </div>
-          <div className="m-3 d-flex flex-column">
-            <label forhtml="respiratoryRate">
-              Respiratory Rate (breaths per minute)
-            </label>
-            <input
-              className="form-control my-2"
-              type="number"
-              id="respiratoryRate"
-              required
-              name="respiratoryRate"
-              min="1"
-            />
-          </div>
+            <Form.Group controlId="formBloodPressureMin">
+              <Form.Label>Blood Pressure Min (mmHg)</Form.Label>
+              <Form.Control
+                type="number"
+                step="1"
+                value={dailyHealthData.bloodPressureMin}
+                onChange={(event) =>
+                  setDailyHealthData({
+                    ...dailyHealthData,
+                    bloodPressureMin: event.target.value,
+                  })
+                }
+              />
+            </Form.Group>
 
-          <div className="d-flex justify-content-center">
-            <button
-              className="btn btn-outline-primary btn-lg m-4 px-4"
-              type="submit"
-            >
-              SUBMIT
-            </button>
-
-            <button
-              type="reset"
-              className="btn btn-outline-danger btn-lg m-4 px-4"
-            >
-              RESET
-            </button>
-          </div>
-        </div>
-      </form>
+            <Form.Group controlId="formRespiratoryRate">
+              <Form.Label>Respiratory Rate (breaths per minute)</Form.Label>
+              <Form.Control
+                type="number"
+                step="1"
+                value={dailyHealthData.respiratoryRate}
+                onChange={(event) =>
+                  setDailyHealthData({
+                    ...dailyHealthData,
+                    respiratoryRate: event.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+            <div className="d-flex justify-content-center mt-2">
+              <div className="mt-2" style={{ margin: '20px 0' }}>
+                <Button variant="primary" type="submit" className="w-100">
+                  Submit
+                </Button>
+              </div>
+              <div className=" mt-2" style={{ marginLeft: '100px', margin: '20px 0' }}>
+                <Button variant="secondary" onClick={handleCancel} className="w-100">
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </Form>
+        </Card.Body>
+      </Card>
     </div>
   );
 };
