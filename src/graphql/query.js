@@ -74,3 +74,20 @@ export const GET_ACTIVE_EMERGENCY_ALERTS = gql`
     }
   }
 `;
+
+export const GET_EMERGENCY_ALERT = gql`
+query GetEmergencyAlertById($id: ID!) {
+  getEmergencyAlertById(id: $id) {
+    _id
+    patient {
+      _id
+      firstname
+      lastname
+    }
+    createdAt
+    severity
+    status
+    resolution
+  }
+}
+`;

@@ -9,14 +9,11 @@ import cookie from 'js-cookie';
 const NurseMenu = () => {
     const navigate = useNavigate();
     const [selectedPatient, setSelectedPatient] = useState(null);
-    const { loading: membersLoading, error: membersError, data: membersData } = useQuery(GET_PATIENT_MEMBERS);
-    const { loading: alertsLoading, error: alertsError, data: alertsData } = useQuery(GET_ACTIVE_EMERGENCY_ALERTS);
+    const { loading: membersLoading, error: membersError, data: membersData } = useQuery(GET_PATIENT_MEMBERS, {pollInterval: 50});
+    const { loading: alertsLoading, error: alertsError, data: alertsData } = useQuery(GET_ACTIVE_EMERGENCY_ALERTS, {pollInterval: 50});
     const firstName = localStorage.getItem('firstname');
 
-    // Determine if any of the patients have an active emergency alert
-    const hasActiveAlert = membersData?.getMembers.some((member) =>
-        alertsData?.getActiveEmergencyAlerts.some((alert) => alert.patient?._id === member._id)
-    );
+    
     const handlePatientSelect = (patient) => {
         setSelectedPatient(patient);
     };
@@ -44,6 +41,11 @@ const NurseMenu = () => {
     const handleTipsSelect = (patient) => {
         navigate(`/sendmotivationaltip/${patient._id}`);
     };
+
+    const handleResolveSelect = (alert) => {
+        console.log('alert id' + alert._id)
+        navigate(`/resolve-emergency/${alert._id}`)
+    }
 
 
 
@@ -105,6 +107,11 @@ const NurseMenu = () => {
                                                 <i className="fas fa-caret-down" style={{ fontSize: '20px' }}></i>
                                             </Dropdown.Toggle>
                                             <Dropdown.Menu>
+                                                {active && (
+                                                    <Dropdown.Item  className="text-danger" onClick={() => handleResolveSelect(activeAlert)}>
+                                                        Resolve Emergency
+                                                    </Dropdown.Item>
+                                                )}
                                                 <Dropdown.Item onClick={() => handleVitalSignsSelect(patient)}>
                                                     Enter Vital Signs
                                                 </Dropdown.Item>
@@ -114,11 +121,6 @@ const NurseMenu = () => {
                                                 <Dropdown.Item onClick={() => handleTipsSelect(patient)}>
                                                     Send Motivational Tips
                                                 </Dropdown.Item>
-                                                {active && (
-                                                    <Dropdown.Item > 
-                                                        Resolve Emergency
-                                                    </Dropdown.Item>
-                                                )}
                                                 <Dropdown.Item onClick={() => navigate('/predict')}>
                                                     Detect Heart Disease
                                                 </Dropdown.Item>
@@ -130,7 +132,7 @@ const NurseMenu = () => {
                         );
                     })}
                     {membersLoading && <tr><td>Loading...</td></tr>}
-                    {membersError && <tr><td>Error: {membersError.message}</td></tr>}
+                    {membersError && <tr><td>Error: <span>{membersError.message}</span></td></tr>}
                 </tbody>
             </Table>
         </div>

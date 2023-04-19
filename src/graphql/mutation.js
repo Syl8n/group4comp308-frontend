@@ -84,3 +84,21 @@ export const CREATE_EMERGENCY_ALERT = gql`
     }
   }
 `;
+
+export const UPDATE_EMERGENCY_ALERT = gql`
+mutation resolveEmergencyAlert($alertId: ID!, $resolution: String!) {
+  resolveEmergencyAlert(alertId: $alertId, resolution: $resolution) {
+    _id
+    patient {
+      _id
+      firstname
+      lastname
+    }
+    severity
+    createdAt
+    status
+    resolution
+  }
+}
+
+`;
