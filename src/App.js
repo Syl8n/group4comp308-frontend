@@ -13,6 +13,7 @@ import PreviousVisits from './components/Nurse/PreviousVisits';
 import GameFrame from './components/Patient/GameFeature';
 import Footer from './components/Common/Footer';
 import MotivationalTip from './components/Nurse/MotivationalTip';
+import DailyTips from './components/Patient/DailyTips'
 
 
 // Initialize Apollo Client
@@ -35,7 +36,6 @@ function App() {
           <Route exact path="/vitalsigns/:id" element={<VitalSignsForm/>} />
           <Route exact path="/previousvisit/:id" element={<PreviousVisits />} />
           <Route exact path="/patient/:id/symptom-checklist" element={<Checklist />} />
-
           <Route exact path="/sendmotivationaltip/:id" element={<MotivationalTip />} />
 
           <Route exact path="/game" element={<GameFrame/>}/>

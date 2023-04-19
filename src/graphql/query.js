@@ -47,3 +47,14 @@ query GetVitalSigns($memberId: ID!) {
   }
 }
 `;
+
+export const GET_MOTIVATIONAL_TIPS = gql `
+query GetTipsByMemberId($memberId: ID!) {
+  getTipsByMemberId(memberId: $memberId) {
+    _id
+    title
+    tip
+    createdAt
+  }
+}
+`

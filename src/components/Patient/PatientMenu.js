@@ -1,10 +1,11 @@
 import React from 'react';
 import { Navbar, Nav,  Button, Container } from 'react-bootstrap';
-import { useParams, useNavigate, NavLink } from 'react-router-dom';
+import {  useNavigate, NavLink } from 'react-router-dom';
 import cookie from 'js-cookie';
+import DailyTips from './DailyTips';
 
 const PatientMenu = () => {
-    const { patientId } = useParams();
+    const patientId = localStorage.getItem('userId');
     const navigate = useNavigate();
     const firstName = localStorage.getItem('firstname');
 
@@ -31,7 +32,7 @@ const PatientMenu = () => {
                     <Nav className="ml-auto">
                         <NavLink className="nav-link" to={`/patient/${patientId}/emergency-alert`}>Emergency Alert</NavLink>
                         <NavLink className="nav-link" to={`/game`}>Fitness Games</NavLink>
-                        <NavLink className="nav-link" to={`/patient/${patientId}/daily-info`}>Daily Info</NavLink>
+                        <NavLink className="nav-link">Daily Info</NavLink>
                         <NavLink className="nav-link" to={`/patient/${patientId}/symptom-checklist`}>Symptom Checklist</NavLink>
 
                     </Nav>
@@ -41,6 +42,7 @@ const PatientMenu = () => {
                 </Navbar.Collapse>
                 </Container>
             </Navbar>
+            <DailyTips />
             {/* Add your page content here */}
         </div>
     );
