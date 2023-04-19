@@ -41,7 +41,7 @@ const NurseMenu = () => {
 
     return (
         <div>
-            <Navbar className="navbar navbar-dark bg-dark">
+            <Navbar className="navbar navbar-dark bg-dark custom-navbar" >
                 <Navbar.Brand>Welcome, {firstName}!</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
@@ -58,7 +58,6 @@ const NurseMenu = () => {
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Username</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -66,11 +65,11 @@ const NurseMenu = () => {
                         <tr key={patient._id} onClick={() => handlePatientSelect(patient)}>
                             <td>{patient.firstname}</td>
                             <td>{patient.lastname}</td>
-                            <td style={{position: 'relative'}}>
-                            {patient.username}
-                            {selectedPatient?._id === patient._id && (
-                            
-                                    <Dropdown style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)', zIndex: 1  }}>
+                            <td style={{ position: 'relative' }}>
+                                {patient.username}
+                                {selectedPatient?._id === patient._id && (
+
+                                    <Dropdown style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)', zIndex: 1 }}>
                                         <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                                             <i className="fas fa-caret-down" style={{ fontSize: '20px' }}></i>
                                         </Dropdown.Toggle>
@@ -81,17 +80,14 @@ const NurseMenu = () => {
                                             <Dropdown.Item onClick={() => navigate('/predict')}>Detect Heart Disease</Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
-                            )}
+                                )}
                             </td>
                         </tr>
                     ))}
-
                     {loading && <tr><td>Loading...</td></tr>}
                     {error && <tr><td>Error: {error.message}</td></tr>}
                 </tbody>
-
             </Table>
-
         </div>
     );
 };

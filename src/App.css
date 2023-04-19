@@ -40,3 +40,12 @@
 .submit-button {
   height: 100px; /* Change the value to match the height of the form fields */
 }
+
+.card {
+  margin-bottom: 50px;
+}
+
+.navbar {
+  padding: 20px !important;
+}
+
