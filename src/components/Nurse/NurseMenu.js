@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Button, Table, Dropdown } from 'react-bootstrap';
 import { useQuery } from '@apollo/client';
 import { GET_PATIENT_MEMBERS, GET_ACTIVE_EMERGENCY_ALERTS } from '../../graphql/query';
@@ -9,11 +9,15 @@ import cookie from 'js-cookie';
 const NurseMenu = () => {
     const navigate = useNavigate();
     const [selectedPatient, setSelectedPatient] = useState(null);
-    const { loading: membersLoading, error: membersError, data: membersData } = useQuery(GET_PATIENT_MEMBERS, {pollInterval: 50});
-    const { loading: alertsLoading, error: alertsError, data: alertsData } = useQuery(GET_ACTIVE_EMERGENCY_ALERTS, {pollInterval: 50});
+    const { loading: membersLoading, error: membersError, data: membersData, refetch: refetchMembers, } = useQuery(GET_PATIENT_MEMBERS);
+    const { loading: alertsLoading, error: alertsError, data: alertsData, refetch: refetchAlerts, } = useQuery(GET_ACTIVE_EMERGENCY_ALERTS);
     const firstName = localStorage.getItem('firstname');
 
-    
+    useEffect(() => {
+        refetchMembers();
+        refetchAlerts();
+      }, []);
+      
     const handlePatientSelect = (patient) => {
         setSelectedPatient(patient);
     };

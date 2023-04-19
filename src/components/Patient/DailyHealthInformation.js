@@ -58,7 +58,7 @@ const DailyHealthInformation = () => {
   };
 
   const handleCancel = () => {
-    navigate('/patient/' + patientid);
+    navigate('/patienthome/' + patientid);
   };
 
   if (addLoading) return <p>Submitting vital signs...</p>

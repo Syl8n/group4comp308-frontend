@@ -1,13 +1,13 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 
 function GameFrame() {
-  const { id } = useParams();
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  const id = localStorage.getItem('userId')
   function handleCancelClick() {
-    navigate(`/patient/${id}`);
+    navigate(`/patienthome/${id}`);
   }
 
   return (

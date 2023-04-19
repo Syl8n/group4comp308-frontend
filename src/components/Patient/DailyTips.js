@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { Row, Col, Card, Container } from 'react-bootstrap';
 import { GET_MOTIVATIONAL_TIPS } from '../../graphql/query';
@@ -7,9 +7,13 @@ const DailyTips = () => {
     const memberId = localStorage.getItem('userId')
     const patientName = localStorage.getItem('firstname')
     console.log('patientId: ', memberId)
-    const { loading, error, data } = useQuery(GET_MOTIVATIONAL_TIPS, {
+    const { loading, error, data, refetch: refetchTips } = useQuery(GET_MOTIVATIONAL_TIPS, {
         variables: { memberId },
     });
+
+    useEffect(() => {
+      refetchTips()
+    }, []);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;

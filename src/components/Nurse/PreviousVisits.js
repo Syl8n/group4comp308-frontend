@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { Table, Button } from 'react-bootstrap';
@@ -13,9 +13,13 @@ const PreviousVisits = () => {
     const { loading: memberLoading, error: memberError, data: memberData } = useQuery(GET_MEMBER, {
         variables: { _id: patientId },
     });
-    const { loading: vitalSignsLoading, error: vitalSignsError, data: vitalSignsData } = useQuery(GET_PREVIOUS_VISITS, {
+    const { loading: vitalSignsLoading, error: vitalSignsError, data: vitalSignsData,  refetch: refetchVisits, } = useQuery(GET_PREVIOUS_VISITS, {
         variables: { memberId: patientId },
     });
+
+    useEffect(() => {
+        refetchVisits()
+      }, []);
 
     if (memberLoading || vitalSignsLoading) {
         return <p>Loading...</p>;
